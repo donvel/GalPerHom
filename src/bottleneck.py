@@ -43,8 +43,20 @@ def write_flow(solver, parts):
           cost))
 
 
+REMOVE_CLOSE_TO_DIAG = False
+
+def remove_close_to_diag(diag):
+  res = np.copy(diag)
+  for ((x,y), val) in np.ndenumerate(diag):
+    if x + 1 == y:
+      res[x,y] = 0
+  return res
+
+
 def get_distance(diag1, diag2):
   diags = [diag1, diag2]
+  if REMOVE_CLOSE_TO_DIAG:
+    diags = [remove_close_to_diag(d) for d in diags]
   solver = pywrapgraph.SimpleMinCostFlow()
 
   parts = [get_verts(d) for d in diags]
@@ -78,6 +90,7 @@ def get_distance(diag1, diag2):
   # write_flow(solver, parts) 
 
   return solver.OptimalCost() / 2.0
+
 
 if __name__ == '__main__':
   args = get_args()

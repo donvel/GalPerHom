@@ -10,6 +10,7 @@ def get_args():
   parser.add_argument('--output-file', dest='output_file', default='train/diags/galaxy.p')
   parser.add_argument('--threshold', dest='threshold', type=int, default=40)
   parser.add_argument('--module-length', dest='length', type=int, default=10)
+  parser.add_argument('--type', dest='type', default="radial")
   parser.add_argument('--show-figure', dest='show', action='store_true')
   return parser.parse_args()
 
@@ -30,14 +31,20 @@ if __name__ == '__main__':
   galaxy_image = utils.extract_galaxy(image, args.threshold)
   show(galaxy_image)
  
-  galaxy_map = utils.pixels_at_least(galaxy_image, args.threshold)
-  distance_map = utils.make_distance_map(galaxy_map)
-  show(distance_map)
+  # galaxy_map = utils.pixels_at_least(galaxy_image, args.threshold)
 
-  poset = utils.create_poset(0, np.amax(distance_map), args.length)
-  radial_per_diag = utils.get_diagram(distance_map, poset)
-  print(radial_per_diag)
-  utils.write_diagram(radial_per_diag, poset, "radial", args.output_file)
+  value_funs = {"radial": utils.make_radial_map,
+                "level": utils.make_coord_map,
+                "brightness": utils.make_brightness_map}
+
+  value_map = value_funs[args.type](galaxy_image)
+  show(value_map)
+
+  poset = utils.create_poset(0, np.amax(value_map), args.length)
+  per_diag = utils.get_diagram(value_map, poset)
+  print(per_diag)
+
+  utils.write_diagram(per_diag, poset, args.type, args.output_file)
 
   if args.show:
     plt.show()
