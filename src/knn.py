@@ -3,7 +3,15 @@ import utils
 
 
 def simple_weight(position, dist):
+  return 1.0
+
+
+def one_over_pos(position, dist):
   return 1.0 / position
+
+
+def one_over_dist(position, dist):
+  return 1.0 / (1.0 + dist)
 
 
 def classify_knn(galaxy_diag, diag_dir, k=1, weight_fun=simple_weight):

@@ -8,6 +8,7 @@ def get_args():
   parser = argparse.ArgumentParser(description='Classify using kNN')
   parser.add_argument('--diagrams-dir', dest='diag_dir', default='train/diags/')
   parser.add_argument('-k', dest='k', type=int, default=1)
+  parser.add_argument('--weight-function', dest='weight_fun', default="simple")
   return parser.parse_args()
 
 
@@ -15,9 +16,14 @@ if __name__ == '__main__':
   args = get_args()
 
   conf_matrix = [[0, 0], [0, 0]]
+  weight_fun = {
+                "simple": knn.simple_weight,
+                "position": knn.one_over_pos,
+                "distance": knn.one_over_dist
+               }[args.weight_fun]
   
   for fname in glob.glob('{}/*.p'.format(args.diag_dir)):
-    prob_class_1 = knn.classify_knn(fname, args.diag_dir, k=args.k)
+    prob_class_1 = knn.classify_knn(fname, args.diag_dir, k=args.k, weight_fun=weight_fun)
     pred_cls = 1 if prob_class_1 >= 0.5 else 0
     real_cls = utils.get_class(fname)
     conf_matrix[pred_cls][real_cls] += 1

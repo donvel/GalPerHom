@@ -6,6 +6,6 @@ do
   do
     bname=$(basename $image .jpg)
     pickle=train/diags/$type/$bname.p
-    echo "python3 src/write_diagram.py --input-file $image --output-file $pickle"
+    python3 src/write_diagram.py --input-file $image --output-file $pickle --type $type
   done
 done
