@@ -7,7 +7,7 @@ import knn
 def get_args():
   parser = argparse.ArgumentParser(description='Classify using kNN')
   parser.add_argument('--diagrams-dir', dest='diag_dir', default='train/diags/radial')
-  parser.add_argument('-k', dest='k', type=int, default=5)
+  parser.add_argument('-k', dest='k', type=int, default=10)
   parser.add_argument('--weight-function', dest='weight_fun', default="simple")
   return parser.parse_args()
 

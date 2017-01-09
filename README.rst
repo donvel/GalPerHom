@@ -4,9 +4,9 @@ Galaxy classification with the use of persistent homologies
 Installation
 ------------
 
- We use Python3, matplotlib and ortools::
+We use Python3, matplotlib and ortools::
 
-  pip3 install -r requirements.txt
+   pip3 install -r requirements.txt
 
 Usage
 -----

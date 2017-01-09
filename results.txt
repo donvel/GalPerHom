@@ -1,45 +1,19 @@
-#1
-
 1. samples
-num: 1000 (500+500)
-thr: 90%
+number: 1000 (500 "1" + 500 "2")
+probability threshold: 90%
 
 2. diagrams
 type: radial
-thr: 40
-length: 10
+threshold: 30
+module length: 10
 
 3. kNN
-k: 5
+k: 10
 weight: simple
 
 4. result
-[[425, 229], [75, 271]]
-0.696
-
-
-#2
-
-Jak 1, ale thr w 2. = 50
-[[431, 253], [69, 247]]
-0.678
-
-#3
-Jak 1, ale thr w 2. = 30
-[[392, 204], [108, 296]]
-0.688
-
-#4
-Jak 3, ale k = 10:
+Confusion matrix:
 [[381, 147], [119, 353]]
+([[classified as "1" and really "1", classified as "1" and really "2"], [...]])
+Accuracy:
 0.734
-
-#5
-Jak 3, ale wieght: distance
-[[389, 199], [111, 301]]
-0.69
-
-#6
-Jak 1, ale k = 15:
-[[413, 212], [87, 288]]
-0.701

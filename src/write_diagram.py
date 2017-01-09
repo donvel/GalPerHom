@@ -8,7 +8,7 @@ def get_args():
   parser = argparse.ArgumentParser(description='Create persistence diagram')
   parser.add_argument('--input-file', dest='input_file', default='train/img/galaxy.jpg')
   parser.add_argument('--output-file', dest='output_file', default='train/diags/galaxy.p')
-  parser.add_argument('--threshold', dest='threshold', type=int, default=40)
+  parser.add_argument('--threshold', dest='threshold', type=int, default=30)
   parser.add_argument('--module-length', dest='length', type=int, default=10)
   parser.add_argument('--type', dest='type', default="radial")
   parser.add_argument('--show-figure', dest='show', action='store_true')
