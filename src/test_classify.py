@@ -29,8 +29,10 @@ if __name__ == '__main__':
     conf_matrix[pred_cls][real_cls] += 1
     print("{}: pred={} real={}".format(utils.get_bname(fname), pred_cls, real_cls))
 
+  print("Confusion matrix:")
   print(conf_matrix)
   
   all_samples = sum(sum(row) for row in conf_matrix)
   accuracy = (conf_matrix[0][0] + conf_matrix[1][1]) / all_samples
+  print("Accuracy:")
   print(accuracy)
