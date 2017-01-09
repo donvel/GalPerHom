@@ -1,5 +1,5 @@
-
-for type in radial level brightness
+#for type in radial level brightness
+for type in radial
 do
   mkdir -p train/diags/$type
   for image in train/img/*.jpg

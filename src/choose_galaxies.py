@@ -1,32 +1,45 @@
-import sys
+import argparse
 import csv
 
-if len(sys.argv) != 4:
-  print("classification.csv probability_threshold no_of_samples")
-  sys.exit()
+def get_args():
+  parser = argparse.ArgumentParser(description='choose galaxies for the training set')
+  parser.add_argument('--class', dest='class_filename', default='kaggle/training_solutions_rev1.csv')
+  parser.add_argument('--output-file', dest='output_filename', default='chosen_1000_09.txt')
+  parser.add_argument('--threshold', dest='prob_threshold', type=float, default=0.9)
+  parser.add_argument('--samples', dest='samples_num', type=int, default=1000)
+  parser.add_argument('--preserve-ratio', dest='preserve_ratio', action='store_true')
 
-class_filename = sys.argv[1]
-prob_threshold = float(sys.argv[2])
-assert prob_threshold > 0.5
-samples_num = int(sys.argv[3])
-assert samples_num > 0
-chosen_gids = []
+  return parser.parse_args()
 
+if __name__ == '__main__':
 
-with open(class_filename) as class_file:
-  class_csv = csv.reader(class_file)
-  next(class_csv, None)  # skip the headers
-  for row in class_csv:
-    gid = row[0]
-    probs = [float(p) for p in row[1:4]]
-    for cl, prob in enumerate(probs):
-      if prob > prob_threshold and cl != 2:
-        chosen_gids += [(cl, gid)]
+  args = get_args()
+  
+  assert(args.prob_threshold > 0.5)
+  assert(args.samples_num > 0)
+  chosen_gids = []
+
+  if not args.preserve_ratio:
+    half = args.samples_num // 2
+    target_nums = (half, args.samples_num - half)
+  class_nums = [0, 0]
+
+  with open(args.class_filename) as class_file:
+    class_csv = csv.reader(class_file)
+    next(class_csv, None)  # skip the headers
+    for row in class_csv:
+      gid = row[0]
+      probs = [float(p) for p in row[1:3]]
+      for cl, prob in enumerate(probs):
+        if (prob > args.prob_threshold and
+            (args.preserve_ratio or class_nums[cl-1] < target_nums[cl-1])):
+          chosen_gids += [(cl, gid)]
+          class_nums[cl-1] += 1
+      if len(chosen_gids) == args.samples_num:
         break
-    if len(chosen_gids) == samples_num:
-      break
 
-chosen_gids.sort()
+  chosen_gids.sort()
 
-for cl, gid in chosen_gids:
-  print(gid, cl)
+  with open(args.output_filename, 'w') as output_file:
+    for cl, gid in chosen_gids:
+      print(gid, cl, file=output_file)

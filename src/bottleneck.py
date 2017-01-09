@@ -6,9 +6,8 @@ from ortools.graph import pywrapgraph
 import utils
 
 
-
 def get_args():
-  parser = argparse.ArgumentParser(description='Create persistence diagram')
+  parser = argparse.ArgumentParser(description='Compute bottleneck distance')
   parser.add_argument('--galaxy1', dest='galaxy1', default='train/diags/galaxy1.p')
   parser.add_argument('--galaxy2', dest='galaxy2', default='train/diags/galaxy2.p')
 
