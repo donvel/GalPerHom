@@ -10,6 +10,7 @@ def get_args():
   parser = argparse.ArgumentParser(description='Compute bottleneck distance')
   parser.add_argument('--galaxy1', dest='galaxy1', default='train/diags/galaxy1.p')
   parser.add_argument('--galaxy2', dest='galaxy2', default='train/diags/galaxy2.p')
+  parser.add_argument('--ignore-near-diag', dest='ignore_near_diag', action='store_true')
 
   return parser.parse_args()
 
@@ -42,9 +43,7 @@ def write_flow(solver, parts):
           cost))
 
 
-REMOVE_CLOSE_TO_DIAG = False
-
-def remove_close_to_diag(diag):
+def remove_near_diag(diag):
   res = np.copy(diag)
   for ((x,y), val) in np.ndenumerate(diag):
     if x + 1 == y:
@@ -52,10 +51,10 @@ def remove_close_to_diag(diag):
   return res
 
 
-def get_distance(diag1, diag2):
+def get_distance(diag1, diag2, ignore_near_diag=False):
   diags = [diag1, diag2]
-  if REMOVE_CLOSE_TO_DIAG:
-    diags = [remove_close_to_diag(d) for d in diags]
+  if ignore_near_diag:
+    diags = [remove_near_diag(d) for d in diags]
   solver = pywrapgraph.SimpleMinCostFlow()
 
   parts = [get_verts(d) for d in diags]
@@ -97,5 +96,5 @@ if __name__ == '__main__':
   for d in diags:
     print(d)
   
-  distance = get_distance(d[0], d[1])
+  distance = get_distance(d[0], d[1], ignore_near_diag=args.ignore_near_diag)
   print(distance)
