@@ -17,3 +17,9 @@ Confusion matrix:
 ([[classified as "1" and really "1", classified as "1" and really "2"], [...]])
 Accuracy:
 0.734
+
+4'. result with rescaling
+Confusion matrix:
+[[357, 243], [143, 257]]
+Accuracy:
+0.614
