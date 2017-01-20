@@ -10,7 +10,8 @@ def get_args():
                       help="Choose only galaxies classified with probability above --threshold")
   parser.add_argument('--samples', dest='samples_num', type=int, default=1000)
   parser.add_argument('--preserve-ratio', dest='preserve_ratio', action='store_true',
-                      help="If this option is set, exactly half of galaxies in each class is chosen")
+                      help="If this option is unset, exactly half of galaxies in each class is \
+                            chosen. If it is set, the proportions in the input csv are preserved")
 
   return parser.parse_args()
 

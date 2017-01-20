@@ -19,7 +19,7 @@ Usage
 #. Choose some number of galaxies to classify. We will classify them as
    *smooth* vs. *having features/disk*, we discard the third Galaxy Zoo main class, ie. *star/artifact*.::
 
-    python3 src/choose_images.py
+    python3 src/choose_galaxies.py
 
 #. Use the generated file with chosen galaxies' ids to copy them into the *train* directory::
 
@@ -28,7 +28,7 @@ Usage
 #. Then generate the persistence diagram. You may use the *radial*, *brightness* or *level* filtration,
    but the first one is most efficient. This may take some time::
      
-    python3 src/make_diagrams.sh radial
+    src/make_diagrams.sh radial
 
 #. Now you can check how well a kNN classification using the generated diagrams performs::
 
