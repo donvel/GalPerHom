@@ -2,12 +2,15 @@ import argparse
 import csv
 
 def get_args():
-  parser = argparse.ArgumentParser(description='choose galaxies for the training set')
+  parser = argparse.ArgumentParser(description='choose galaxies for the training set and write \
+                                   their names to --output-file')
   parser.add_argument('--class', dest='class_filename', default='kaggle/training_solutions_rev1.csv')
   parser.add_argument('--output-file', dest='output_filename', default='chosen_1000_09.txt')
-  parser.add_argument('--threshold', dest='prob_threshold', type=float, default=0.9)
+  parser.add_argument('--threshold', dest='prob_threshold', type=float, default=0.9,
+                      help="Choose only galaxies classified with probability above --threshold")
   parser.add_argument('--samples', dest='samples_num', type=int, default=1000)
-  parser.add_argument('--preserve-ratio', dest='preserve_ratio', action='store_true')
+  parser.add_argument('--preserve-ratio', dest='preserve_ratio', action='store_true',
+                      help="If this option is set, exactly half of galaxies in each class is chosen")
 
   return parser.parse_args()
 

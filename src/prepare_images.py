@@ -5,7 +5,8 @@ import shutil
 
 
 def get_args():
-  parser = argparse.ArgumentParser(description='copy galaxy images to training directory')
+  parser = argparse.ArgumentParser(description='copy galaxy images from --images-dir listed in the \
+                                  --chosen file to the training directory --output-dir')
   parser.add_argument('--chosen', dest='chosen_filename', default='chosen_1000_09.txt')
   parser.add_argument('--images-dir', dest='images_dir', default='kaggle/images_training_rev1')
   parser.add_argument('--output-dir', dest='output_dir', default='train/img')

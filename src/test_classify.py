@@ -5,12 +5,18 @@ import utils
 import knn
 
 def get_args():
-  parser = argparse.ArgumentParser(description='Classify using kNN')
+  parser = argparse.ArgumentParser(description="Classify every diagram in [diag_dir] using all the \
+           other ones in [diag_dir] (k Nearest Nieghbors)")
   parser.add_argument('--diagrams-dir', dest='diag_dir', default='train/diags/radial')
-  parser.add_argument('--secondary-diagrams-dir', dest='sec_diag_dir', default=None)
+  parser.add_argument('--secondary-diagrams-dir', dest='sec_diag_dir', default=None,
+                      help="When this option is set, use the sum of distances between \
+                      corresponding diagrams")
   parser.add_argument('-k', dest='k', type=int, default=10)
-  parser.add_argument('--weight-function', dest='weight_fun', default="simple")
-  parser.add_argument('--ignore-near-diag', dest='ignore_near_diag', action='store_true')
+  parser.add_argument('--weight-function', dest='weight_fun', default="simple",
+                      help="Choose from simple (constant), position (1 / position among \
+                      closest neighbors), distance (1 / (1 + bottleneck distance))")
+  parser.add_argument('--ignore-near-diag', dest='ignore_near_diag', action='store_true',
+                      help="Ignore entries just above diagonal")
   return parser.parse_args()
 
 
