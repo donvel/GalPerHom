@@ -90,6 +90,8 @@ def distance(p1, p2):
 
 
 # make a generic filtration map of 'image' according to some 'function'
+# NOTE: this is in fact a reversed filtration i. e. we will consider the sets of pixels
+# with filtration index >= some value (not <= some value).
 def make_generic_map(image, function):
   res = np.zeros_like(image, dtype=float)
   for ix, val in np.ndenumerate(image):

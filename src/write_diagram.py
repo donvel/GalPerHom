@@ -46,12 +46,15 @@ if __name__ == '__main__':
                 "level": utils.make_coord_map,
                 "brightness": utils.make_brightness_map}
 
-  # value_map is an image with filtration level stored at pixel's coords
+  # value_map is an image with filtration index stored at pixel's coords
+  # NOTE: this is in fact a reversed filtration i. e. we will consider the sets of pixels
+  # with filtration index >= some value (not <= some value).
   value_map = value_funs[args.type](galaxy_image)
   show(value_map)
 
-  # TODO maybe np.amin(value_map) would be better than 0, but some functions may assume
+  # TODO np.amin(value_map) would be better than 0, but I'm afraid that some functions may assume
   # that the values are >= 0
+
   # poset = finite subset of R used to index the vector spaces in the persistence module
   poset = utils.create_poset(0, np.amax(value_map), args.length)
 
